@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #define WIDTH 3
 
-typedef bool[WIDTH][WIDTH] squareElementStrucurant;
+using squareElementStructurant = array<array<bool, WIDTH>, WIDTH>;
