@@ -1,3 +1,6 @@
 *.o
 tp3
 .vscode/
+*_seuillée.pgm
+difference.pgm
+*_seuillée_dilaté.pgm
