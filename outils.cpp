@@ -58,3 +58,28 @@ void difference(string imageUnPath, string imageDeuxPath)
   delete imageDeux;
   delete result;
 }
+
+void erosion(string imageUnPath, squareElementStructurant element){
+  t_Image *imageUn = new t_Image({0, 0, 0});
+  bool statusUn = false;
+
+  loadPgm(imageUnPath, imageUn, statusUn);
+  t_Image *result = new t_Image({0, 0, 0});
+  result->h = 512;
+  result->w = 512;
+  for (int i = 0; i < imageUn->h; i++){
+    for (int j = 0; j < imageUn->w; j++){
+      if(imageUn->im[i][j] == element[1][1] && imageUn->im[i-1][j] == element[0][1] &&
+        imageUn->im[i][j-1] == element[1][0] && imageUn->im[i-1][j-1] == element[0][0] &&
+        imageUn->im[i][j+1] == element[1][2]){
+        result->im[i][j] = 0;
+      }
+      else{
+        result->im[i][j] = 1;
+      }
+    }
+  }
+  savePgm("erosion.pgm", result);
+  delete imageUn;
+  delete result;
+}
