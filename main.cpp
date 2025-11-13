@@ -16,6 +16,6 @@ int main(int argc, char **argv)
                                       {1, 1, 1},
                                       {0, 1, 0},
 }};
-  erosion("./seuil.pgm", square);
+  erosion("./spriteErosion.pgm", square);
   return 0;
 }
