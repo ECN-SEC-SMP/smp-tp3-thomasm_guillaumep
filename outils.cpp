@@ -59,46 +59,51 @@ void difference(string imageUnPath, string imageDeuxPath)
   delete result;
 }
 
+// fonction permettant de faire la dilation d'une image à partir d'une image en noir et blanc (seuillage/différence)
 void dilatation(squareElementStructurant &elementStructurant, string NomImage, bool &okOut)
 {
   okOut = false;
-  t_Image *Image = new t_Image({0, 0, 0});
-  bool okIn = false;
-  loadPgm(NomImage, Image, okIn);
-  if (!okIn)
+  t_Image *Image = new t_Image({0, 0, 0}); // structure de l'image qui sera chargé
+  bool okIn = false;                       // booléean pour savoir si l'image sera bien chargé dans la structure
+  loadPgm(NomImage, Image, okIn);          // chargement de l'image dans la structure
+  if (!okIn)                               // si problème de chargement
   {
-    okOut = false;
-    delete Image;
-    return;
+    okOut = false; // retour du booléen false
+    delete Image;  // libération de la mémoire
+    return;        // on sort de la fonction
   }
-  t_Image *original = new t_Image({Image->w, Image->h, {0}});
-  t_Image *temp = new t_Image({Image->w, Image->h, {0}});
-  // Copy original image to preserve initial state during dilation
+  // copie de l'image originale dans une temporaire pour que le les modifs n'impactent pas l'analyse de l'image originale'
+  t_Image *ImageOut = new t_Image({Image->w, Image->h, {0}});
+  // on remplie la nouvelle structure de sortie
   for (int i = 0; i < Image->h; i++)
   {
     for (int j = 0; j < Image->w; j++)
     {
-      original->im[i][j] = Image->im[i][j];
-      temp->im[i][j] = Image->im[i][j];
+      ImageOut->im[i][j] = Image->im[i][j];
     }
   }
+  // traitement
+  // on parcourt toute l'image
   for (int i = 0; i < Image->h; i++)
   {
     for (int j = 0; j < Image->w; j++)
     {
-      if (original->im[i][j] == 255)
+      // si le pixel est blanc alors on le dilate en suivant l'élément structurant
+      if (Image->im[i][j] == 255)
       {
+        // on parcourt tout l'élément structurant (attention boucle for en négatif pour être de bien avoir tous les pixels)
         for (int m = -WIDTH / 2; m <= WIDTH / 2; m++)
         {
           for (int n = -WIDTH / 2; n <= WIDTH / 2; n++)
           {
-            if (elementStructurant[m + WIDTH / 2][n + WIDTH / 2])
+            if (elementStructurant[m + WIDTH / 2][n + WIDTH / 2]) // si c'est true dans l'élement structurant
             {
+              // calcul de la position actuelle
               int x = i + m;
               int y = j + n;
-              if (x >= 0 && x < Image->h && y >= 0 && y < Image->w)
+              if (x >= 0 && x < Image->h && y >= 0 && y < Image->w) // et si c'est bien dans les dimensions de l'image
               {
-                temp->im[x][y] = 255;
+                ImageOut->im[x][y] = 255; // on met le pixel en blanc
               }
             }
           }
@@ -106,10 +111,11 @@ void dilatation(squareElementStructurant &elementStructurant, string NomImage, b
       }
     }
   }
+  // nouveau nom de la nouvelle image pour l'enregistrement
   size_t pos = NomImage.find_last_of('.');
   NomImage.insert(pos, "_dilaté");
-  savePgm(NomImage, temp);
-  okOut = true;
-  delete original;
-  delete temp;
+  savePgm(NomImage, ImageOut);
+  okOut = true; // true pour dire que tout s'est bien passé
+  delete Image; // libération de la mémoire
+  delete ImageOut;
 }
