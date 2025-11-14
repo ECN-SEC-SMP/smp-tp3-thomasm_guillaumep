@@ -1,37 +1,39 @@
 #include "outils.h"
 
+// fonction de seuillage d'une image
 void seuillage(string NomImage, unsigned int &seuil, bool &okOut)
 {
-  bool okIn = false;
-  t_Image *Image = new t_Image({0, 0, 0});
-  loadPgm(NomImage, Image, okIn);
-  if (okIn)
+  bool okIn = false;                       // booléean pour savoir si l'image sera bien chargé dans la structure
+  t_Image *Image = new t_Image({0, 0, 0}); // structure de l'image qui sera chargé
+  loadPgm(NomImage, Image, okIn);          // chargement de l'image dans la structure
+  if (okIn)                                // si l'image est bien chargé
   {
     // okIn = false;
-    for (int i = 0; i < Image->w; i++)
+    for (int i = 0; i < Image->w; i++) // parcours de l'image
     {
       for (int j = 0; j < Image->h; j++)
       {
-        if (Image->im[i][j] < seuil)
+        if (Image->im[i][j] < seuil) // seuillage
         {
-          Image->im[i][j] = 0;
+          Image->im[i][j] = 0; // noir
         }
         else
         {
-          Image->im[i][j] = 255;
+          Image->im[i][j] = 255; // blanc
         }
       }
     }
+    // nouveau nom de la nouvelle image pour l'enregistrement
     size_t pos = NomImage.find_last_of('.');
     NomImage.insert(pos, "_seuillée");
     savePgm(NomImage, Image);
-    okOut = true;
+    okOut = true; // true pour dire que tout s'est bien passé
   }
-  else
+  else // si problème de chargement
   {
-    okOut = false;
+    okOut = false; // retour du booléen false
   }
-  delete Image;
+  delete Image; // libération de la mémoire
 }
 
 void difference(string imageUnPath, string imageDeuxPath)
