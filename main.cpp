@@ -26,5 +26,13 @@ int main(int argc, char **argv)
       {0, 1, 0},
   }};
   erosion("./spriteErosion.pgm", square);
+
+  ouverture("./woman512x512_seuillée.pgm", square1, ok);
+  fermeture("./woman512x512_seuillée.pgm", square1, ok);
+
+  seuillage("./plane512x512.pgm", seuil, ok);
+  ouverture("./plane512x512_seuillée.pgm", square1, ok);
+  fermeture("./plane512x512_seuillée.pgm", square1, ok);
+
   return 0;
 }

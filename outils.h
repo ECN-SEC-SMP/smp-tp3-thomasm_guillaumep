@@ -13,3 +13,6 @@ void difference(string imageUnPath, string imageDeuxPath);
 
 void dilatation(squareElementStructurant &elementStructurant, string NomImage, bool &okOut);
 void erosion(string imageUnPath, squareElementStructurant element);
+
+void ouverture(string NomImage, squareElementStructurant element, bool &okOut);
+void fermeture(string NomImage, squareElementStructurant element, bool &okOut);

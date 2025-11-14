@@ -208,3 +208,17 @@ void erosion(string imageUnPath, squareElementStructurant element)
   delete imageUn;
   delete result;
 }
+
+// érosion suivi de dilatation
+void ouverture(string NomImage, squareElementStructurant element, bool &okOut)
+{
+  erosion(NomImage, element);
+  dilatation(element, NomImage, okOut);
+}
+
+// dilatation suivi d'érosion
+void fermeture(string NomImage, squareElementStructurant element, bool &okOut)
+{
+  dilatation(element, NomImage, okOut);
+  erosion(NomImage, element);
+}
