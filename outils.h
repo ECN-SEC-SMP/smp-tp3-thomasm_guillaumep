@@ -12,3 +12,4 @@ void seuillage(string NomImage, unsigned int &seuil, bool &okOut);
 void difference(string imageUnPath, string imageDeuxPath);
 
 void dilatation(squareElementStructurant &elementStructurant, string NomImage, bool &okOut);
+void erosion(string imageUnPath, squareElementStructurant element);
