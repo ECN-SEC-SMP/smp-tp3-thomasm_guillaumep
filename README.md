@@ -15,13 +15,37 @@ Objectif: Réaliser un algorithme de dilatation et d'érosion pour faire du trai
 
 ## 3) Fonctions et validations
 
-### A. seuillage
+### A. `seuillage(string NomImage, unsigned int &seuil, bool &okOut) → void`
+- **Spécification** : Remplace les pixels d'un niveau de gris inférieur au seuil.
+- **Principe** : Si le pixel est inférieur au seuil, celui-ci est remplacé par un pixel noir, sinon par un pixel blanc.
+- **Essais** : 
 
-### B. difference
+[image avant seuillage]
+[image après seuillage]
 
-### C. dilatation
+### B. `difference(string imageUnPath, string imageDeuxPath) → void`
+- **Spécification** : Effectue la différence entre deux images.
+- **Principe** : Prend chaque pixel des deux images et calcul la valeur absolue de la différence des valeurs du pixel des deux images.
+- **Essais** :
 
-### D. erosion
+[image avant difference]
+[image après difference]
+
+### C. `dilatation(squareElementStructurant &elementStructurant, string NomImage, bool &okOut) → void`
+- **Spécification** : Permet d'agrendir le pixel d'une image en fonction de l'élément structurant.
+- **Principe** : Analyse chaque pixel d'une image et fait correspondre la forme de l'élément structurant en ajoutant des pixels blancs.
+- **Essais** :
+
+[image avant dilatation]
+[image après dilatation]
+
+### D. `erosion(string imageUnPath, squareElementStructurant element) → void`
+- **Spécification** : Permet de réduire les objets dans une image en supprimant les pixels sur leurs contours.
+- **Principe** : Vérifie chaque pixel de l'image et vérifie si ils correspondent à l'élément structurant. Si les pixels ne correspondent pas à ceux de l'élément structurant, le pixel est remplacé par un pixel blanc.
+- **Essais** :
+
+[image avant erosion]
+[image après erosion]
 
 ---
 
